@@ -1,22 +1,22 @@
 package gcache
 
 type ByteView struct {
-	b []byte
+	B []byte
 }
 
 func (bv ByteView) Len() int {
-	return len(bv.b)
+	return len(bv.B)
 }
 
 func (bv ByteView) ByteSlice() []byte {
-	return cloneBytes(bv.b)
+	return CloneBytes(bv.B)
 }
 
 func (bv ByteView) String() string {
-	return string(bv.b)
+	return string(bv.B)
 }
 
-func cloneBytes(b []byte) []byte {
+func CloneBytes(b []byte) []byte {
 	b1 := make([]byte, len(b))
 	copy(b1, b)
 	return b1

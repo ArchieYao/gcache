@@ -27,7 +27,7 @@ var (
 // NewGroup 这里的getter是真实获取val的方法，初始化时传入
 func NewGroup(name string, cacheBytes int64, getter Getter) *Group {
 	if getter == nil {
-		panic("nil Getter")
+		// panic("nil Getter")
 	}
 	mutex.Lock()
 	defer mutex.Unlock()
@@ -78,11 +78,15 @@ func (g *Group) load(key string) (ByteView, error) {
 	if err != nil {
 		return ByteView{}, err
 	}
-	val := ByteView{b: cloneBytes(bv)}
+	val := ByteView{B: CloneBytes(bv)}
 	g.populateCache(key, val)
 	return val, nil
 }
 
 func (g *Group) populateCache(key string, val ByteView) {
+	g.mainCache.add(key, val)
+}
+
+func (g *Group) Set(key string, val ByteView) {
 	g.mainCache.add(key, val)
 }
